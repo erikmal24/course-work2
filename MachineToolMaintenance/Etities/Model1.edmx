@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище MachineToolMaintenanceModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Repair">
+          <Key>
+            <PropertyRef Name="RepairId" />
+          </Key>
+          <Property Name="RepairId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypesOfMachinesId" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="RepairNote" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypesOfMachines">
+          <Key>
+            <PropertyRef Name="TypesOfMachinesId" />
+          </Key>
+          <Property Name="TypesOfMachinesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ReleaseDate" Type="date" Nullable="false" />
+          <Property Name="Stamp" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypesOfRepairs">
+          <Key>
+            <PropertyRef Name="TypesOfRepairsId" />
+          </Key>
+          <Property Name="TypesOfRepairsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypesOfRepairsTitle" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="Cost" Type="money" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Repair_TypesOfMachines">
+          <End Role="TypesOfMachines" Type="Self.TypesOfMachines" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypesOfMachines">
+              <PropertyRef Name="TypesOfMachinesId" />
+            </Principal>
+            <Dependent Role="Repair">
+              <PropertyRef Name="TypesOfMachinesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище MachineToolMaintenanceModelContainer">
+          <EntitySet Name="Repair" EntityType="Self.Repair" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypesOfMachines" EntityType="Self.TypesOfMachines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypesOfRepairs" EntityType="Self.TypesOfRepairs" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Repair_TypesOfMachines" Association="Self.FK_Repair_TypesOfMachines">
+            <End Role="TypesOfMachines" EntitySet="TypesOfMachines" />
+            <End Role="Repair" EntitySet="Repair" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MachineToolMaintenanceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Repair">
+          <Key>
+            <PropertyRef Name="RepairId" />
+          </Key>
+          <Property Name="RepairId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypesOfMachinesId" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RepairNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TypesOfMachines" Relationship="Self.FK_Repair_TypesOfMachines" FromRole="Repair" ToRole="TypesOfMachines" />
+        </EntityType>
+        <EntityType Name="TypesOfMachines">
+          <Key>
+            <PropertyRef Name="TypesOfMachinesId" />
+          </Key>
+          <Property Name="TypesOfMachinesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReleaseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Stamp" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Repair" Relationship="Self.FK_Repair_TypesOfMachines" FromRole="TypesOfMachines" ToRole="Repair" />
+        </EntityType>
+        <EntityType Name="TypesOfRepairs">
+          <Key>
+            <PropertyRef Name="TypesOfRepairsId" />
+          </Key>
+          <Property Name="TypesOfRepairsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypesOfRepairsTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Repair_TypesOfMachines">
+          <End Role="TypesOfMachines" Type="Self.TypesOfMachines" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Repair" Type="Self.Repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypesOfMachines">
+              <PropertyRef Name="TypesOfMachinesId" />
+            </Principal>
+            <Dependent Role="Repair">
+              <PropertyRef Name="TypesOfMachinesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MachineToolMaintenanceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Repair" EntityType="Self.Repair" />
+          <EntitySet Name="TypesOfMachines" EntityType="Self.TypesOfMachines" />
+          <EntitySet Name="TypesOfRepairs" EntityType="Self.TypesOfRepairs" />
+          <AssociationSet Name="FK_Repair_TypesOfMachines" Association="Self.FK_Repair_TypesOfMachines">
+            <End Role="TypesOfMachines" EntitySet="TypesOfMachines" />
+            <End Role="Repair" EntitySet="Repair" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MachineToolMaintenanceModelContainer" CdmEntityContainer="MachineToolMaintenanceEntities">
+          <EntitySetMapping Name="Repair">
+            <EntityTypeMapping TypeName="MachineToolMaintenanceModel.Repair">
+              <MappingFragment StoreEntitySet="Repair">
+                <ScalarProperty Name="RepairId" ColumnName="RepairId" />
+                <ScalarProperty Name="TypesOfMachinesId" ColumnName="TypesOfMachinesId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="RepairNote" ColumnName="RepairNote" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypesOfMachines">
+            <EntityTypeMapping TypeName="MachineToolMaintenanceModel.TypesOfMachines">
+              <MappingFragment StoreEntitySet="TypesOfMachines">
+                <ScalarProperty Name="TypesOfMachinesId" ColumnName="TypesOfMachinesId" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="Stamp" ColumnName="Stamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypesOfRepairs">
+            <EntityTypeMapping TypeName="MachineToolMaintenanceModel.TypesOfRepairs">
+              <MappingFragment StoreEntitySet="TypesOfRepairs">
+                <ScalarProperty Name="TypesOfRepairsId" ColumnName="TypesOfRepairsId" />
+                <ScalarProperty Name="TypesOfRepairsTitle" ColumnName="TypesOfRepairsTitle" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
